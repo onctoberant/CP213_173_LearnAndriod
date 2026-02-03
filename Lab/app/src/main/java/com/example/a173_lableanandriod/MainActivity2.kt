@@ -45,16 +45,16 @@ class MainActivity2 : ComponentActivity() {
 fun Greeting2(name: String, modifier: Modifier = Modifier) {
 //    var inputText by remember { mutableStateOf("") }
 //
- //   Column {
- //       Text(
- //           text = "Hello $name! say = ..." + inputText,
- //           modifier = modifier
+//    Column {
+//        Text(
+//            text = "Hello $name! say = ..." + inputText,
+//            modifier = modifier
 //        )
- //       TextField(
- //           value = "",
- //           onValueChange = {}
- //       )
-  //  }
+//        TextField(
+//            value = "",
+//            onValueChange = {}
+//        )
+//    }
 }
 
 @Preview(showBackground = true)

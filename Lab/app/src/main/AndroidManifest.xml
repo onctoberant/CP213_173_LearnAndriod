@@ -13,6 +13,16 @@
         android:theme="@style/Theme._173_LabLeanAndriod"
         tools:targetApi="31">
         <activity
+            android:name=".ListActivity3"
+            android:exported="false"
+            android:label="@string/title_activity_list3"
+            android:theme="@style/Theme._173_LabLeanAndriod" />
+        <activity
+            android:name=".LIstActivity"
+            android:exported="false"
+            android:label="@string/title_activity_list"
+            android:theme="@style/Theme._173_LabLeanAndriod" />
+        <activity
             android:name=".LstActivity"
             android:exported="false"
             android:label="@string/title_activity_lst"

@@ -1,5 +1,7 @@
 package com.example.a173_lableanandriod
 
+import android.app.ListActivity
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -28,6 +30,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RadialGradient
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -39,143 +42,166 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(color = Color.Gray)
-                    .padding(32.dp)){
-                //
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(32.dp)
-                        .background(color = Color.White)
-
-                ){
-                    Text(
-                        text = "hp",
-                        modifier = Modifier
-                            .align(alignment = Alignment.CenterStart)
-                            .fillMaxWidth(fraction = 0.5F)
-                            .background(color = Color.Red)
-                            .padding(8.dp)
-                    )
-                }
-
-                Image(
-                    painter = painterResource(id = R.drawable.profile),
-                    contentDescription = "Profile",
-                    modifier = Modifier
-                        .size(400.dp)
-                        .align(Alignment.CenterHorizontally)
-                        .padding(top = 16.dp, bottom = 40.dp)
-                )
-
-                var str by remember { mutableStateOf(8) }
-                var Agi by remember { mutableStateOf(10) }
-                var Int by remember { mutableStateOf(15) }
+            RBGCardView(
+               onNextActivity = {
+                    startActivity(Intent(this, ListActivity3::class.java))
+            })
 
 
-               Row(
-                   modifier = Modifier.fillMaxSize(),
-                   horizontalArrangement = Arrangement.SpaceBetween
-               ) {
-
-                   Column(
-                       horizontalAlignment = Alignment.CenterHorizontally,
-                       verticalArrangement = Arrangement.Center
-                   ) {
-                       Button(onClick = {
-                           str = str + 1
-                       }) {
-                           Image(
-                               painter = painterResource(id = R.drawable.outline_arrow_upward_24),
-                               contentDescription = "up",
-                               modifier = Modifier
-                                   .size(20.dp)
-                           )
-                       }
-
-
-                       Text(text ="Str", fontSize = 20.sp)
-                       Text(text = str.toString() , fontSize = 25.sp)
-                       Button(onClick = {
-                           str = str - 1
-                       }) {
-                           Image(
-                               painter = painterResource(id = R.drawable.outline_arrow_downward_alt_24),
-                               contentDescription = "up",
-                               modifier = Modifier
-                                   .size(20.dp)
-                           )
-                       }
-
-                   }
-
-                   Column(
-                       horizontalAlignment = Alignment.CenterHorizontally,
-                       verticalArrangement = Arrangement.Center
-                   )
-                   {
-                       Button(onClick = {
-                           Agi = Agi + 1
-                       }) {
-                           Image(
-                               painter = painterResource(id = R.drawable.outline_arrow_upward_24),
-                               contentDescription = "up",
-                               modifier = Modifier
-                                   .size(20.dp)
-                           )
-                       }
-
-                       Text(text ="Agi", fontSize = 20.sp)
-                       Text(text = Agi.toString(), fontSize = 25.sp,)
-                       Button(onClick = {
-                           Agi = Agi - 1
-                       }) {
-                           Image(
-                               painter = painterResource(id = R.drawable.outline_arrow_downward_alt_24),
-                               contentDescription = "up",
-                               modifier = Modifier
-                                   .size(20.dp)
-                           )
-                       }
-
-                   }
-
-                   Column(
-                       horizontalAlignment = Alignment.CenterHorizontally,
-                       verticalArrangement = Arrangement.Center
-                   ) {
-                       Button(onClick = {
-                           Int = Int + 1
-                       }) {
-                           Image(
-                               painter = painterResource(id = R.drawable.outline_arrow_upward_24),
-                               contentDescription = "up",
-                               modifier = Modifier
-                                   .size(20.dp)
-                           )
-                       }
-                       Text(text ="Int", fontSize = 20.sp)
-                       Text(text = Int.toString(), fontSize = 25.sp)
-
-                       Button(onClick = {
-                           Int = Int - 1
-                       }) {
-                           Image(
-                               painter = painterResource(id = R.drawable.outline_arrow_downward_alt_24),
-                               contentDescription = "up",
-                               modifier = Modifier
-                                   .size(20.dp)
-                           )
-                       }
-                   }
-              }
-
-            }
 
         }
 
     }
 }
+    @Composable
+    fun RBGCardView (onNextActivity: () -> Unit) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Gray)
+                .padding(32.dp)
+        ) {
+            //hp
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(32.dp)
+                    .background(Color.White)
+
+            ) {
+
+
+            }
+            //
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(32.dp)
+                    .background(color = Color.White)
+
+            ) {
+                Text(
+                    text = "hp",
+                    modifier = Modifier
+                        .align(alignment = Alignment.CenterStart)
+                        .fillMaxWidth(fraction = 0.5F)
+                        .background(color = Color.Red)
+                        .padding(8.dp)
+                )
+            }
+
+            Image(
+                painter = painterResource(id = R.drawable.profile),
+                contentDescription = "Profile",
+                modifier = Modifier
+                    .size(400.dp)
+                    .align(Alignment.CenterHorizontally)
+                    .padding(top = 16.dp, bottom = 40.dp)
+                    .clickable {
+                        onNextActivity.invoke()
+                    }
+            )
+
+            var str by remember { mutableStateOf(8) }
+            var Agi by remember { mutableStateOf(10) }
+            var Int by remember { mutableStateOf(15) }
+
+
+            Row(
+                modifier = Modifier.fillMaxSize(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Button(onClick = {
+                        str = str + 1
+                    }) {
+                        Image(
+                            painter = painterResource(id = R.drawable.outline_arrow_upward_24),
+                            contentDescription = "up",
+                            modifier = Modifier
+                                .size(20.dp)
+                        )
+                    }
+
+
+                    Text(text = "Str", fontSize = 20.sp)
+                    Text(text = str.toString(), fontSize = 25.sp)
+                    Button(onClick = {
+                        str = str - 1
+                    }) {
+                        Image(
+                            painter = painterResource(id = R.drawable.outline_arrow_downward_alt_24),
+                            contentDescription = "up",
+                            modifier = Modifier
+                                .size(20.dp)
+                        )
+                    }
+
+                }
+
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                )
+                {
+                    Button(onClick = {
+                        Agi = Agi + 1
+                    }) {
+                        Image(
+                            painter = painterResource(id = R.drawable.outline_arrow_upward_24),
+                            contentDescription = "up",
+                            modifier = Modifier
+                                .size(20.dp)
+                        )
+                    }
+
+                    Text(text = "Agi", fontSize = 20.sp)
+                    Text(text = Agi.toString(), fontSize = 25.sp,)
+                    Button(onClick = {
+                        Agi = Agi - 1
+                    }) {
+                        Image(
+                            painter = painterResource(id = R.drawable.outline_arrow_downward_alt_24),
+                            contentDescription = "up",
+                            modifier = Modifier
+                                .size(20.dp)
+                        )
+                    }
+
+                }
+
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Button(onClick = {
+                        Int = Int + 1
+                    }) {
+                        Image(
+                            painter = painterResource(id = R.drawable.outline_arrow_upward_24),
+                            contentDescription = "up",
+                            modifier = Modifier
+                                .size(20.dp)
+                        )
+                    }
+                    Text(text = "Int", fontSize = 20.sp)
+                    Text(text = Int.toString(), fontSize = 25.sp)
+
+                    Button(onClick = {
+                        Int = Int - 1
+                    }) {
+                        Image(
+                            painter = painterResource(id = R.drawable.outline_arrow_downward_alt_24),
+                            contentDescription = "up",
+                            modifier = Modifier
+                                .size(20.dp)
+                        )
+                    }
+                }
+            }
+        }
+    }

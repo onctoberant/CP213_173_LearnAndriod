@@ -69,7 +69,7 @@ class MainActivity : ComponentActivity() {
                     .background(Color.White)
 
             ) {
-                
+
                 Text(
                     text = "hp",
                     modifier = Modifier

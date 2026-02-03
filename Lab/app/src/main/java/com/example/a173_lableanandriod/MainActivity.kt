@@ -69,17 +69,7 @@ class MainActivity : ComponentActivity() {
                     .background(Color.White)
 
             ) {
-
-
-            }
-            //
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(32.dp)
-                    .background(color = Color.White)
-
-            ) {
+                
                 Text(
                     text = "hp",
                     modifier = Modifier

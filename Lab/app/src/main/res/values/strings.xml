@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">173_LabLeanAndriod</string>
+    <string name="title_activity_main2">MainActivity2</string>
+    <string name="title_activity_lst">LstActivity</string>
+    <string name="title_activity_list">LIstActivity</string>
+    <string name="title_activity_list3">ListActivity3</string>
+</resources>

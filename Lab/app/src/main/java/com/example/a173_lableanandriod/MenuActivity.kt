@@ -16,6 +16,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.a173_lableanandriod.ListActivity3
+import com.example.a173_lableanandriod.MainActivity
+import com.example.a173_lableanandriod.MainActivity2
 import com.example.a173_lableanandriod.ui.theme._173_LabLeanAndriodTheme
 
 class MenuActivity : ComponentActivity() {
@@ -41,21 +44,5 @@ class MenuActivity : ComponentActivity() {
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    _173_LabLeanAndriodTheme {
-        Greeting("Android")
     }
 }

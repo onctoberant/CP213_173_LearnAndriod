@@ -44,7 +44,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             RBGCardView(
                onNextActivity = {
-                    startActivity(Intent(this, MainActivity2::class.java))
+                    startActivity(Intent(this, MenuActivity::class.java))
             })
 
 

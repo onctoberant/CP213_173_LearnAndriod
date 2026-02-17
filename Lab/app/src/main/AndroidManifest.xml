@@ -15,10 +15,15 @@
         android:theme="@style/Theme._173_LabLeanAndriod"
         tools:targetApi="31">
         <activity
+            android:name=".SharedPreferencesActivity"
+            android:exported="false"
+            android:label="@string/title_activity_shared_preferences"
+            android:theme="@style/Theme._173_LabLeanAndriod" />
+        <activity
             android:name=".MenuActivity"
             android:exported="true"
             android:label="@string/title_activity_menu"
-            android:theme="@style/Theme._173_LabLeanAndriod" >
+            android:theme="@style/Theme._173_LabLeanAndriod">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -57,9 +62,7 @@
             android:name=".MainActivity"
             android:exported="false"
             android:label="@string/app_name"
-            android:theme="@style/Theme._173_LabLeanAndriod">
-
-        </activity>
+            android:theme="@style/Theme._173_LabLeanAndriod" />
     </application>
 
 </manifest>

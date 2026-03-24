@@ -66,3 +66,5 @@ class SensorTracker(context: Context) : SensorEventListener {
         // ไม่จำเป็นต้องใช้ในตัวอย่างนี้
     }
 }
+
+// Lab 24/3

@@ -3,6 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="andriod.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!-- สำหรับ Android 12 และต่ำกว่า -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
+    <!-- สำหรับ Android 13 ขึ้นไป -->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 
     <application
         android:allowBackup="true"
@@ -62,6 +67,18 @@
             android:name=".MainActivity"
             android:exported="false"
             android:label="@string/app_name"
+            android:theme="@style/Theme._173_LabLeanAndriod" />
+        <activity
+            android:name=".CameraActivity"
+            android:exported="false"
+            android:theme="@style/Theme._173_LabLeanAndriod" />
+        <activity
+            android:name=".SensorActivity"
+            android:exported="false"
+            android:theme="@style/Theme._173_LabLeanAndriod" />
+        <activity
+            android:name=".GalleryActivity"
+            android:exported="false"
             android:theme="@style/Theme._173_LabLeanAndriod" />
     </application>
 

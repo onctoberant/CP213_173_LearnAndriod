@@ -1,16 +1,17 @@
 package com.example.a173_lableanandriod
 
+import android.Manifest
 import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -18,21 +19,25 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
 import com.example.a173_lableanandriod.ui.theme._173_LabLeanAndriodTheme
 import kotlinx.coroutines.flow.StateFlow
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Data Model (ใช้ร่วมกันระหว่าง SensorTracker และ ViewModel)
+// Data Models (ใช้ร่วมกันระหว่าง SensorTracker และ ViewModel)
 // ─────────────────────────────────────────────────────────────────────────────
 data class AccelerometerData(val x: Float = 0f, val y: Float = 0f, val z: Float = 0f)
+data class LocationData(
+    val latitude: Double = 0.0,
+    val longitude: Double = 0.0,
+    val altitude: Double = 0.0
+)
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Layer ที่ 2: ViewModel Layer
 //
 // ViewModel ทำหน้าที่:
 //   1. ถือ Instance ของ SensorTracker (Hardware Layer)
-//   2. Expose StateFlow ของ sensorData ต่อให้ UI ดึงไปใช้
+//   2. Expose StateFlow ของ sensorData + locationData ต่อให้ UI ดึงไปใช้
 //   3. สั่ง start/stop tracker ตาม lifecycle ของตัวเอง
 //
 // ข้อสำคัญ: ViewModel ไม่รู้จัก SensorManager หรือ Activity เลย
@@ -42,6 +47,7 @@ class SensorViewModel(private val tracker: SensorTracker) : ViewModel() {
 
     // นำ StateFlow จาก SensorTracker มาเปิดให้ UI อ่านได้โดยตรง
     val sensorData: StateFlow<AccelerometerData> = tracker.sensorData
+    val locationData: StateFlow<LocationData> = tracker.locationData
 
     init {
         // เริ่มรับค่าจากเซนเซอร์ทันทีที่ ViewModel ถูกสร้าง
@@ -106,24 +112,46 @@ fun SensorScreen(viewModel: SensorViewModel, modifier: Modifier = Modifier) {
     // collectAsState() แปลง StateFlow → Compose State
     // ทุกครั้งที่ StateFlow เปลี่ยน Composable นี้จะ Recompose อัตโนมัติ
     val sensorData by viewModel.sensorData.collectAsState()
+    val locationData by viewModel.locationData.collectAsState()
+
+    // ─── ขอ Permission สำหรับ Location ───────────────────────────────────
+    var locationPermissionGranted by remember { mutableStateOf(false) }
+
+    val locationPermissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        locationPermissionGranted = permissions.values.all { it }
+    }
+
+    // ขอ Permission ตอนเปิดหน้าจอครั้งแรก
+    LaunchedEffect(Unit) {
+        locationPermissionLauncher.launch(
+            arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            )
+        )
+    }
 
     Column(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier
+            .fillMaxSize()
+            .padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        // ─── Accelerometer Card ──────────────────────────────────────────
         Text(
             text = "📡 Accelerometer",
             fontSize = 26.sp,
             fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(bottom = 24.dp)
+            modifier = Modifier.padding(bottom = 16.dp)
         )
 
-        // การ์ดแสดงค่า X, Y, Z แบบ Real-time
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 32.dp),
+                .padding(horizontal = 16.dp),
             elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
         ) {
             Column(
@@ -135,6 +163,34 @@ fun SensorScreen(viewModel: SensorViewModel, modifier: Modifier = Modifier) {
                 SensorValueRow(axis = "Y", value = sensorData.y)
                 HorizontalDivider()
                 SensorValueRow(axis = "Z", value = sensorData.z)
+            }
+        }
+
+        Spacer(modifier = Modifier.height(32.dp))
+
+        // ─── GPS Location Card ───────────────────────────────────────────
+        Text(
+            text = "📍 GPS Location",
+            fontSize = 26.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
+
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        ) {
+            Column(
+                modifier = Modifier.padding(24.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                LocationValueRow(label = "Latitude", value = locationData.latitude)
+                HorizontalDivider()
+                LocationValueRow(label = "Longitude", value = locationData.longitude)
+                HorizontalDivider()
+                LocationValueRow(label = "Altitude", value = locationData.altitude)
             }
         }
 
@@ -161,6 +217,26 @@ private fun SensorValueRow(axis: String, value: Float) {
         )
         Text(
             text = "${"%.4f".format(value)} m/s²",
+            fontSize = 18.sp,
+            color = MaterialTheme.colorScheme.primary
+        )
+    }
+}
+
+@Composable
+private fun LocationValueRow(label: String, value: Double) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = label,
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Medium
+        )
+        Text(
+            text = "${"%.6f".format(value)}°",
             fontSize = 18.sp,
             color = MaterialTheme.colorScheme.primary
         )

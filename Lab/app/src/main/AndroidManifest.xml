@@ -111,6 +111,34 @@
             android:name=".Part8AdaptiveLayoutActivity"
             android:exported="false"
             android:theme="@style/Theme._173_LabLeanAndriod" />
+        <activity
+            android:name=".Part9Activity"
+            android:exported="false"
+            android:theme="@style/Theme._173_LabLeanAndriod" />
+        <activity
+            android:name=".Part10Activity"
+            android:exported="false"
+            android:theme="@style/Theme._173_LabLeanAndriod" />
+        <activity
+            android:name=".Part11Activity"
+            android:exported="false"
+            android:theme="@style/Theme._173_LabLeanAndriod" />
+        <activity
+            android:name=".Part12Activity"
+            android:exported="false"
+            android:theme="@style/Theme._173_LabLeanAndriod" />
+
+        <receiver
+            android:name=".MyGlanceWidgetReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/my_glance_widget_info" />
+        </receiver>
+
     </application>
 
 </manifest>

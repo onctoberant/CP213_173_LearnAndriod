@@ -66,4 +66,8 @@ dependencies {
 
     // Lifecycle & ViewModel สำหรับ Compose
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.0")
+
+    // Jetpack Glance สำหรับทำ App Widget ด้วย Compose
+    implementation("androidx.glance:glance-appwidget:1.1.0-rc01")
+    implementation("androidx.glance:glance-material3:1.1.0-rc01")
 }

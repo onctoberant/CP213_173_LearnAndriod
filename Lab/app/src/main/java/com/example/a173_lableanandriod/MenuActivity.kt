@@ -136,6 +136,33 @@ class MenuActivity : ComponentActivity() {
                 }) {
                     Text("Part 8: Adaptive Layouts (Fade In Only)")
                 }
+
+                // ==========================================
+                // Mission 9 - 12
+                // ==========================================
+                Button(onClick = {
+                    startActivity(Intent(this@MenuActivity, Part9Activity::class.java))
+                }) {
+                    Text("Part 9: Collapsing Toolbar")
+                }
+                
+                Button(onClick = {
+                    startActivity(Intent(this@MenuActivity, Part10Activity::class.java))
+                }) {
+                    Text("Part 10: App Widget Concept")
+                }
+                
+                Button(onClick = {
+                    startActivity(Intent(this@MenuActivity, Part11Activity::class.java))
+                }) {
+                    Text("Part 11: Skeleton Loading (Shimmer)")
+                }
+                
+                Button(onClick = {
+                    startActivity(Intent(this@MenuActivity, Part12Activity::class.java))
+                }) {
+                    Text("Part 12: Bottom Sheet & Dialog")
+                }
             }
         }
     }
